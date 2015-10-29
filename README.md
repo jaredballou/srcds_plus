@@ -10,6 +10,7 @@ This is a simple python script to automate the installation of sourcemod and met
 
 ### Things I'd like to add ###
 
+* Scrape the webpages for the latest version numbers instead of hardcoding the URLs
 * Something to assist with installing steamcmd or maybe even a source dedicated server
 * Windows support (probably not though)
 
