@@ -6,8 +6,8 @@ This is a simple python script to automate the installation of sourcemod and met
 
 * Dependencies
 * wget
-** You need to already have a source dedicated server installed
-** Documentation [here](https://developer.valvesoftware.com/wiki/SteamCMD)
+* You need to already have a source dedicated server installed
+* Documentation [here](https://developer.valvesoftware.com/wiki/SteamCMD)
 
 ### Things I'd like to add ###
 
