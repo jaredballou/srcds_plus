@@ -19,8 +19,12 @@ def get_path():
       'Where is your game installed? (eg. /home/steamuser/csgo_server): '
     ).strip()
 
-    if not os.path.exists(game_path):
-      print "It looks like %s does not exist, please try again" % game_path
+    # Make sure this is a the correct folder
+    if not os.path.exists("%s/cfg" % game_path):
+      print "\nThat directory does not look like a source dedicated server, "\
+        "are you sure this is correct?\nIt should be the same folder that has "\
+        "maps and cfgs\n"
+
       game_path = None
 
   return game_path
