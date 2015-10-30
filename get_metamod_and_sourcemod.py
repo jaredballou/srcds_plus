@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# This script will download and install both metamod and sourcemod
 import os
 import platform
 import subprocess
@@ -7,16 +6,53 @@ import tarfile
 import zipfile
 
 
-def get_path():
+def binary_prompt(prompt=None):
+  if not prompt:
+    prompt = "Do you want to proceed?"
+  response = None
+  responses = {"y": True, "n": False}
+  while response not in responses:
+    response = raw_input("%s [y/n]: " % prompt).strip().lower()
+  return responses[response]
+
+
+def extract_file(compressed_file, target_path):
   """
-  get_path()
+  extract_file(compressed_file, target_path)
+
+  extracts the compressed_file to target_path
+  """
+
+  if os.path.exists(compressed_file):
+    print "Extracting %s to %s\n" % (compressed_file, target_path)
+
+    if zipfile.is_zipfile(compressed_file):
+      with zipfile.ZipFile(compressed_file, "r") as z:
+          z.extractall(path=target_path)
+
+    if tarfile.is_tarfile(compressed_file):
+      tar = tarfile.open(compressed_file)
+      tar.extractall(path=target_path)
+      tar.close()
+
+    print "Cleaning up\n"
+    os.remove(compressed_file)
+
+    print "Done!\n"
+  else:
+    print "%s does not exist, cannot extract" % compressed_file
+
+
+def get_existing_path(game_path=None):
+  """
+  get_existing_path()
 
   prompts the user for the path to their steam server
   """
-  game_path = None
+
   while not game_path:
     game_path = raw_input(
-      'Where is your game installed? (eg. /home/steamuser/csgo_server): '
+      'Where is your server going to be? (eg. /home/steamuser/csgo_server): '
     ).strip()
 
     # Make sure this is a the correct folder
@@ -54,9 +90,114 @@ def get_url(plugin, extension):
   return download_url[plugin]
 
 
-def install_plugins(game_path):
+def install_dedicated_server(steam_path=None):
   """
-  install_plugins()
+  install_dedicated_server(steam_path=None)
+
+  Executes the steamcmd script and begins downloading a dedicated server
+  """
+  steam_path = '/tmp'
+
+  server_names = [
+      "1. Counter-Strike Global Offensive",
+      "2. Counter-Strike Source ",
+      "3. Day of Defeat Source",
+      "4. Garrys Mod",
+      "5. Insurgency",
+      "6. Left 4 Dead 2",
+      "7. Left 4 Dead",
+      "8. Team Fortress 2",
+    ]
+
+  app_ids = {
+      '1': 740,
+      '2': 232330,
+      '3': 232290,
+      '4': 4020,
+      '5': 237410,
+      '6': 222860,
+      '7': 22284,
+      '8': 232250,
+    }
+
+  choice = None
+  while not choice:
+    print "\nSupported Dedicated Servers"
+    for server_name in server_names:
+      print server_name
+    choice = int(
+      raw_input("\nWhich dedicated server would you like to install?: ")
+    )
+    choice -= 1
+
+    if binary_prompt(
+      "You chose %s, is that correct?" % server_names[choice][3:]
+    ):
+      server_path = "%s dedicated-server" % server_names[choice][3:]
+      subprocess.call(
+        "%s/steamcmd.sh +login anonymous +force_install_dir \"%s/%s\" +app_update %s +quit" % (
+          steam_path,
+          steam_path,
+          server_path,
+          app_ids.values()[choice]
+        ),
+        shell=True)
+
+      if os.path.exists("%s/srcds_run" % server_path):
+        if binary_prompt(
+          "\nInstallation Sucessful! Would you like to install sourcemod and metamod?"
+        ):
+          download_plugins(game_path=server_path)
+        print "Enjoy!"
+        return
+    else:
+      choice = None
+
+
+def install_steamcmd():
+  """
+  install_steamcmd()
+
+  Grabs the correct build of steamcmd for the paltform and unzips it
+  """
+  platform = get_platform()
+
+  if binary_prompt('Would you like to install SteamCMD?'):
+    steamcmd_path = None
+    while not steamcmd_path:
+      steamcmd_path = raw_input(
+        'Where shall I install steamcmd? (eg. /home/steamuser/csgo_server): '
+      ).strip()
+
+    steamcmd_tar = {
+      'linux': 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz',
+      'mac': 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_osx.tar.gz'
+    }
+
+    downloaded_tar = "%s/steamcmd.tar.gz" % steamcmd_path
+
+    print "Downloading steamcmd for %s from %s. Saving to %s\n" % (
+      platform, steamcmd_tar[platform], downloaded_tar
+    )
+
+    subprocess.call(
+      "wget --quiet -O %s %s" % (downloaded_tar, steamcmd_tar[platform]),
+      shell=True
+    )
+
+    extract_file(compressed_file=downloaded_tar, target_path=steamcmd_path)
+
+    print "SteamCMD installed! You can find it at %s/steamcmd.sh\n" % steamcmd_path
+
+    if binary_prompt('Would you like to install a game server now?'):
+      install_dedicated_server(steam_path=steamcmd_path)
+
+  return
+
+
+def download_plugins(game_path):
+  """
+  download_plugins()
 
   wgets the plugins
   """
@@ -72,24 +213,8 @@ def install_plugins(game_path):
       "wget --quiet -O %s %s" % (downloaded_plugin, url), shell=True
     )
 
-    if os.path.exists(downloaded_plugin):
-      print "Extracting %s to %s\n" % (plugin_name, game_path)
-      # Use unzip for mac
-      if get_platform() == 'mac':
-        with zipfile.ZipFile(downloaded_plugin, "r") as z:
-            z.extractall(path=game_path)
-      else:
-        # Assume the user is a superior linux user
-        tar = tarfile.open(downloaded_plugin)
-        tar.extractall(path=game_path)
-        tar.close()
-
-      print "Cleaning up\n"
-      os.remove(downloaded_plugin)
-
-      print "Done!\n"
-
+    # Extract the files
+    extract_file(compressed_file=downloaded_plugin, target_path=game_path)
 
 if __name__ == '__main__':
-  game_path = get_path()
-  install_plugins(game_path)
+  install_steamcmd()
