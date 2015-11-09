@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import os
-import platform
 import subprocess
 import tarfile
 import zipfile
@@ -66,25 +65,20 @@ def get_existing_path(game_path=None):
   return game_path
 
 
-def get_platform():
+def get_url(plugin):
   """
-  get_platform()
+  get_url(plugin)
 
-  Tells the script which build of the plugins to get, mac or linux
+  returns the download url for the specified plugin
   """
-  for platform_name, friendly_name in {
-    'Darwin': 'mac',
-    'Linux': 'linux',
-  }.items():
-    if platform_name in platform.platform():
-      return friendly_name
-
-
-def get_url(plugin, extension):
+  sm_version = subprocess.check_output(
+    'curl http://www.sourcemod.net/smdrop/1.7/sourcemod-latest-linux',
+    shell=True,
+  )
 
   download_url = {
-    'metamod': "http://www.metamodsource.net/mmsdrop/1.10/mmsource-1.10.7-git948-%s.%s" % (get_platform(), extension),
-    'sourcemod': "https://www.sourcemod.net/smdrop/1.7/sourcemod-1.7.3-git5272-%s.%s" % (get_platform(), extension),
+    'metamod': 'http://www.metamodsource.net/mmsdrop/1.10/mmsource-1.10.7-git948-linux.tar.gz',
+    'sourcemod': "http://www.sourcemod.net/smdrop/1.7/%s" % sm_version,
   }
 
   return download_url[plugin]
@@ -160,7 +154,6 @@ def install_steamcmd():
 
   Grabs the correct build of steamcmd for the paltform and unzips it
   """
-  platform = get_platform()
 
   if binary_prompt('Would you like to install SteamCMD?'):
     steamcmd_path = None
@@ -169,19 +162,14 @@ def install_steamcmd():
         'Where shall I install steamcmd? (eg. /home/steamuser/csgo_server): '
       ).strip()
 
-    steamcmd_tar = {
-      'linux': 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz',
-      'mac': 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_osx.tar.gz'
-    }
+    steamcmd_tar = 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz'
 
     downloaded_tar = "%s/steamcmd.tar.gz" % steamcmd_path
 
-    print "Downloading steamcmd for %s from %s. Saving to %s\n" % (
-      platform, steamcmd_tar[platform], downloaded_tar
-    )
+    print "Downloading steamcmd from %s. Saving to %s\n" % (steamcmd_tar, downloaded_tar)
 
     subprocess.call(
-      "wget --quiet -O %s %s" % (downloaded_tar, steamcmd_tar[platform]),
+      "wget --quiet -O %s %s" % (downloaded_tar, steamcmd_tar),
       shell=True
     )
 
@@ -201,14 +189,11 @@ def download_plugins(game_path):
 
   wgets the plugins
   """
-  platform = get_platform()
-  file_extension = 'zip' if 'mac' in platform else 'tar.gz'
-
   for plugin_name in ['metamod', 'sourcemod']:
-    url = get_url(plugin=plugin_name, extension=file_extension)
-    downloaded_plugin = "%s/%s.%s" % (game_path, plugin_name, file_extension)
+    url = get_url(plugin=plugin_name)
+    downloaded_plugin = "%s/%s" % (game_path, plugin_name)
 
-    print "Downloading %s from %s\n" % (plugin_name, url)
+    print "\nDownloading %s from %s\n" % (plugin_name, url)
     subprocess.call(
       "wget --quiet -O %s %s" % (downloaded_plugin, url), shell=True
     )
@@ -217,4 +202,5 @@ def download_plugins(game_path):
     extract_file(compressed_file=downloaded_plugin, target_path=game_path)
 
 if __name__ == '__main__':
-  install_steamcmd()
+  # install_steamcmd()
+  print get_url('sourcemod')
