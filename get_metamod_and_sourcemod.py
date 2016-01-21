@@ -90,7 +90,6 @@ def install_dedicated_server(steam_path=None):
 
   Executes the steamcmd script and begins downloading a dedicated server
   """
-  steam_path = '/tmp'
 
   server_names = [
       "1. Counter-Strike Global Offensive",
@@ -177,8 +176,8 @@ def install_steamcmd():
 
     print "SteamCMD installed! You can find it at %s/steamcmd.sh\n" % steamcmd_path
 
-    if binary_prompt('Would you like to install a game server now?'):
-      install_dedicated_server(steam_path=steamcmd_path)
+  if binary_prompt('Would you like to install a game server now?'):
+    install_dedicated_server(steam_path=steamcmd_path)
 
   return
 
@@ -202,5 +201,4 @@ def download_plugins(game_path):
     extract_file(compressed_file=downloaded_plugin, target_path=game_path)
 
 if __name__ == '__main__':
-  # install_steamcmd()
-  print get_url('sourcemod')
+  install_steamcmd()
