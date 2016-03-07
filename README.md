@@ -1,6 +1,6 @@
 # README #
 
-This abomination of python was created because I used to host steam dedicated servers, took a break, and when I wanted to host one again, I had forgotten how to get everything set up. 
+This abomination of python was created because I used to host steam dedicated servers, took a break, and when I wanted to host one again, I had forgotten how to get everything set up.
 
 This will take care of installing SteamCMD, installing a dedicated server, and installing sourcemod + metamod (you still have to install plugins)
 
@@ -11,9 +11,9 @@ speed up the 0 to play pipeline if you are running this on a fresh linux install
 * Wget and python. Thats it baby
 
 #### Usage ####
-List of supported games
+List of supported games:
 1. Counter-Strike Global Offensive
-2. Counter-Strike Source 
+2. Counter-Strike Source
 3. Day of Defeat Source
 4. Garrys Mod
 5. Insurgency
