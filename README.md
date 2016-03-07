@@ -12,14 +12,14 @@ speed up the 0 to play pipeline if you are running this on a fresh linux install
 
 #### Usage ####
 List of supported games:
-* 1. Counter-Strike Global Offensive
-* 2. Counter-Strike Source
-* 3. Day of Defeat Source
-* 4. Garrys Mod
-* 5. Insurgency
-* 6. Left 4 Dead 2
-* 7. Left 4 Dead
-* 8. Team Fortress 2
+1. Counter-Strike Global Offensive
+2. Counter-Strike Source
+3. Day of Defeat Source
+4. Garrys Mod
+5. Insurgency
+6. Left 4 Dead 2
+7. Left 4 Dead
+8. Team Fortress 2
 
 To install Insurgency for example:
 ```python srcds_plus.py --path /home/steamuser/games --game 5 --sourcemod```
