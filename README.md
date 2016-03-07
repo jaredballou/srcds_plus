@@ -8,16 +8,18 @@ My Goal with this was to avoid using any third party python libraries in order t
 speed up the 0 to play pipeline if you are running this on a fresh linux install
 
 #### Dependencies ####
-* Wget and python. Das it baby
+* Wget and python. Thats it baby
 
 ### Things I'd like to add ###
 
 * Add more options to the dedicated server list, right now its just a few popular games
-* Scrape the metamod/sourcemod webapges for the latest version numbers instead of hardcoding the URLs
+* ~~Pass commands to the script ```python install_server --directory /path/to/server --metamod```~~
+* Handle the case where steamcmd is already installed (perhaps write to a config file ```~/.srcds_plus_configs)```
+* ~~Scrape the metamod/sourcemod webapges for the latest version numbers instead of hardcoding the URLs~~
 * ~~Something to assist with installing steamcmd or maybe even a source dedicated server~~
 * Windows support (probably not though)
 
 ### Who do I talk to? ###
 
 * Repo owner or admin
-* Other community or team contact
+* I'm usually always available on [Steam](http://steamcommunity.com/profiles/76561198002556086)
