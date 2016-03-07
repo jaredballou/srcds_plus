@@ -10,10 +10,13 @@ speed up the 0 to play pipeline if you are running this on a fresh linux install
 #### Dependencies ####
 * Wget and python. Thats it baby
 
+#### Usage ####
+```python srcds_plus.py --path /home/steamuser/games --game 5 --sourcemod```
+
 ### Things I'd like to add ###
 
 * Add more options to the dedicated server list, right now its just a few popular games
-* ~~Pass commands to the script ```python install_server --directory /path/to/server --metamod```~~
+* ~~Pass commands to the script~~
 * Handle the case where steamcmd is already installed (perhaps write to a config file ```~/.srcds_plus_configs)```
 * ~~Scrape the metamod/sourcemod webapges for the latest version numbers instead of hardcoding the URLs~~
 * ~~Something to assist with installing steamcmd or maybe even a source dedicated server~~
