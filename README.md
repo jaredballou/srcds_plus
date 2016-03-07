@@ -11,7 +11,7 @@ speed up the 0 to play pipeline if you are running this on a fresh linux install
 * Wget and python. Thats it baby
 
 #### Usage ####
-List of supported games:
+######List of supported games:######
 1. Counter-Strike Global Offensive
 2. Counter-Strike Source
 3. Day of Defeat Source
