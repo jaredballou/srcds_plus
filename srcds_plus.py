@@ -101,13 +101,16 @@ def install_steamcmd(steamcmd_path=None):
 
   Grabs the correct build of steamcmd for the paltform and unzips it
   """
+  if os.path.exists("%s/steamcmd.sh" % steamcmd_path):
+    print "Found existing steamcmd.sh install at %s" % steamcmd_path
+    return
+
   if not os.path.exists(steamcmd_path):
     print "%s does not exist, creating path before downloading steamcmd\n"\
       % steamcmd_path
     os.makedirs(steamcmd_path)
 
-  steamcmd_tar = "https://steamcdn-a.akamaihd.net/client/\
-  installer/steamcmd_linux.tar.gz"
+  steamcmd_tar = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz"
 
   downloaded_tar = "%s/steamcmd.tar.gz" % steamcmd_path
 
@@ -122,8 +125,6 @@ def install_steamcmd(steamcmd_path=None):
   )
 
   extract_file(compressed_file=downloaded_tar, target_path=steamcmd_path)
-
-  print "SteamCMD installed! You can find it at %s/steamcmd.sh\n" % steamcmd_path
 
 
 def download_plugins(game_path):
