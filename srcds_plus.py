@@ -71,6 +71,7 @@ def install_dedicated_server(steam_path=None, game=None, sourcemod=False):
       ('Left 4 Dead 2', 222860),
       ('Left 4 Dead', 22284),
       ('Team Fortress 2', 232250),
+      ('Chivalry Medieval Warfare', 220070),
     ]
 
     # Replace spaces with underscores for friendly reading
@@ -176,8 +177,9 @@ def parse_arguments():
           5. Insurgency\
           6. Left 4 Dead 2\
           7. Left 4 Dead\
-          8. Team Fortress 2",
-    choices=['1', '2', '3', '4', '5', '6', '7', '8'],
+          8. Team Fortress 2\
+          9. Chivalry Medieval Warfare",
+    choices=['1', '2', '3', '4', '5', '6', '7', '8', '9'],
   )
 
   parser.add_argument(

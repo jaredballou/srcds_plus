@@ -20,6 +20,7 @@ speed up the 0 to play pipeline if you are running this on a fresh linux install
 6. Left 4 Dead 2
 7. Left 4 Dead
 8. Team Fortress 2
+9. Chivalry Medieval Warfare
 
 * Other linux servers available [here](https://developer.valvesoftware.com/wiki/Dedicated_Servers_List#Linux_Dedicated_Servers)
 * Open a pull request if you want one added
