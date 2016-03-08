@@ -28,7 +28,7 @@ To install Insurgency for example:
 
 * Add more options to the dedicated server list, right now its just a few popular games
 * ~~Pass commands to the script~~
-* Handle the case where steamcmd is already installed (perhaps write to a config file ```~/.srcds_plus_configs)```
+* ~~Handle the case where steamcmd is already installed (perhaps write to a config file ```~/.srcds_plus_configs```)~~
 * ~~Scrape the metamod/sourcemod webapges for the latest version numbers instead of hardcoding the URLs~~
 * ~~Something to assist with installing steamcmd or maybe even a source dedicated server~~
 * Windows support (probably not though)
