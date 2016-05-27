@@ -40,7 +40,7 @@ def get_url(plugin):
   returns the download url for the specified plugin
   """
   sm_version = subprocess.check_output(
-    'curl http://www.sourcemod.net/smdrop/1.7/sourcemod-latest-linux',
+    'curl -s http://www.sourcemod.net/smdrop/1.7/sourcemod-latest-linux',
     shell=True,
   )
 
