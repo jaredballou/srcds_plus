@@ -40,13 +40,13 @@ def get_url(plugin):
   returns the download url for the specified plugin
   """
   sm_version = subprocess.check_output(
-    'curl -s http://www.sourcemod.net/smdrop/1.7/sourcemod-latest-linux',
+    'curl -s http://www.sourcemod.net/smdrop/1.8/sourcemod-latest-linux',
     shell=True,
   )
 
   download_url = {
     'metamod': 'http://www.metamodsource.net/mmsdrop/1.10/mmsource-1.10.7-git948-linux.tar.gz',
-    'sourcemod': "http://www.sourcemod.net/smdrop/1.7/%s" % sm_version,
+    'sourcemod': "http://www.sourcemod.net/smdrop/1.8/%s" % sm_version,
   }
 
   return download_url[plugin]
