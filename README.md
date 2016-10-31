@@ -36,6 +36,8 @@ To install Insurgency for example:
 * ~~Scrape the metamod/sourcemod webapges for the latest version numbers instead of hardcoding the URLs~~
 * ~~Something to assist with installing steamcmd or maybe even a source dedicated server~~
 * Windows support (probably not though)
+* Drop the whole pre-defined list of games and have the user input an appid, then 
+look up the server name using that
 
 ### Who do I talk to? ###
 
